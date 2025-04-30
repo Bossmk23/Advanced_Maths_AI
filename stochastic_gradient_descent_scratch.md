@@ -11,13 +11,13 @@ Optimization in machine learning refers to the process of minimizing a loss func
 
 Here are the key advantages of Stochastic Gradient Descent (SGD):
 
-**Faster and Memory-Efficient:** Since SGD updates model parameters using small batches instead of the full dataset, it significantly reduces computation time and memory usage, making it ideal for large-scale data.
+- **Faster and Memory-Efficient:** Since SGD updates model parameters using small batches instead of the full dataset, it significantly reduces computation time and memory usage, making it ideal for large-scale data.
 
-**Helps Escape Local Minima:** The randomness in data batches allows SGD to jump out of local minima, helping it find better overall solutions.
+- **Helps Escape Local Minima:** The randomness in data batches allows SGD to jump out of local minima, helping it find better overall solutions.
 
-**Simple and Effective:** SGD is easy to implement and supported by most machine learning libraries. Its use of mini-batches and randomness not only reduces computational load but also helps the model avoid getting stuck in poor solutions, improving its ability to generalize on new data.
+- **Simple and Effective:** SGD is easy to implement and supported by most machine learning libraries. Its use of mini-batches and randomness not only reduces computational load but also helps the model avoid getting stuck in poor solutions, improving its ability to generalize on new data.
 
-**Supports Online Learning:** SGD can update the model as new data arrives, making it suitable for real-time applications.
+- **Supports Online Learning:** SGD can update the model as new data arrives, making it suitable for real-time applications.
 
 ## Working of SGD (Theory)
 
@@ -34,25 +34,25 @@ By doing this many times, the model gradually reduces its loss and improves its 
 
 ## Key Terms to Remember
 
-**Epoch:** One full pass through the entire dataset. It defines how many times the learning algorithm will work through the entire training dataset.
+- **Epoch:** One full pass through the entire dataset. It defines how many times the learning algorithm will work through the entire training dataset.
 
-**Batch Size:** The number of training examples used in one update step.
+- **Batch Size:** The number of training examples used in one update step.
 
-**Learning Rate (η):** A small number that controls how big each update step is.
+- **Learning Rate (η):** A small number that controls how big each update step is.
 
-**Formula:** θ = θ - η * ∇J(θ) where θ represents the parameters, η is the learning rate, and ∇J(θ) is the gradient.
+- **Formula:** θ = θ - η * ∇J(θ) where θ represents the parameters, η is the learning rate, and ∇J(θ) is the gradient.
 
-**Gradient:** The direction and rate of steepest increase in loss; we move in the opposite direction to reduce the loss.
+- **Gradient:** The direction and rate of steepest increase in loss; we move in the opposite direction to reduce the loss.
 
-**For logistic regression:** ∇w = (1/m) * Xᵀ * (ŷ - y).
+- **For logistic regression:** ∇w = (1/m) * Xᵀ * (ŷ - y).
 
-**Sigmoid Function:** Used for binary classification to squash values between 0 and 1.
+- **Sigmoid Function:** Used for binary classification to squash values between 0 and 1.
 
-**Formula:** σ(z) = 1 / (1 + e^(-z)).
+- **Formula:** σ(z) = 1 / (1 + e^(-z)).
 
-**Binary Cross-Entropy:** A loss function used for binary classification problems.
+- **Binary Cross-Entropy:** A loss function used for binary classification problems.
 
-**Formula:** L = - (1/m) * Σ [y * log(ŷ) + (1 - y) * log(1 - ŷ)].
+- **Formula:** L = - (1/m) * Σ [y * log(ŷ) + (1 - y) * log(1 - ŷ)].
 
 ## Code Demonstration: Implementing SGD
 
@@ -170,6 +170,4 @@ Additionally, a plot showing Loss vs Epoch will appear. The loss decreases over 
 
 Stochastic Gradient Descent (SGD) is a powerful optimization technique used in machine learning, especially for training large models efficiently. By updating model parameters using small batches of data, SGD minimizes computational cost and memory usage. It also introduces randomness, which helps escape local minima, improving the model's ability to generalize.
 
-Through this tutorial, you’ve learned how SGD works by building an SGD optimizer from scratch and testing it on a simple binary classification problem. By applying these concepts, you can optimize machine learning models more effectively and tackle real-world problems in AI and data science.
-
-Mastering SGD opens up many opportunities in AI-driven industries.
+Through this tutorial, you’ve learned how SGD works by building an SGD optimizer from scratch and testing it on a simple binary classification problem. By applying these concepts, you can optimize machine learning models more effectively and tackle real-world problems in AI and data science. Mastering SGD opens up many opportunities in AI-driven industries.
