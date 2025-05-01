@@ -1,0 +1,192 @@
+
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage{hyperref}
+\title{Convergence Proofs for Optimization Algorithms}
+\author{Manika Singh, Gaurav Singh Parihar, and Seema Verma}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Optimization lies at the core of modern machine learning and artificial intelligence, where the goal is to minimize a loss function that measures the difference between predicted and true outcomes. Among various optimization techniques, Gradient Descent (GD) and its variants, such as Stochastic Gradient Descent (SGD), Adam, and RMSProp, have become fundamental tools due to their simplicity and efficiency in high-dimensional spaces.
+
+\section{Basic Concepts}
+
+\textbf{Gradient:} A vector containing all partial derivatives of a function with respect to its input variables.  
+
+\textbf{Loss Function:} A scalar value indicating prediction error used to guide parameter updates.  
+
+\textbf{Epochs:} One complete pass through the training dataset.
+
+\textbf{Gradient Descent (GD):} Uses the full batch to compute gradients and update parameters.
+
+\textbf{Stochastic Gradient Descent (SGD):} Uses one sample or mini-batch at a time.
+
+\textbf{Mean Squared Error (MSE) Loss:} Average of squared differences between predicted and actual values.
+
+\textbf{Convexity:} Every local minimum is also a global minimum in convex functions.
+
+\textbf{Momentum:} Helps optimization move faster and more smoothly.
+
+\textbf{Learning Rate:} Hyperparameter that controls step size in parameter updates.
+
+\section{Optimization Techniques}
+
+\subsection{Gradient Descent (GD)}
+\textbf{Update Rule:}
+\[
+\theta = \theta - \alpha \cdot \nabla_\theta J(\theta)
+\]
+
+\textbf{Convergence Proof Sketch (Convex + Lipschitz Case):}
+
+Assumptions:
+\begin{itemize}
+    \item $f(y) \geq f(x) + \nabla f(x)^T(y - x)$
+    \item $\|\nabla f(x) - \nabla f(y)\| \leq L\|x - y\|$
+\end{itemize}
+
+Update:
+\[
+\theta_{t+1} = \theta_t - \alpha \nabla f(\theta_t)
+\]
+
+\[
+f(\theta_{t+1}) \leq f(\theta_t) - \left( \alpha - \frac{L\alpha^2}{2} \right) \|\nabla f(\theta_t)\|^2
+\]
+
+If $\alpha \leq \frac{1}{L}$:
+\[
+f(\theta_{t+1}) \leq f(\theta_t) - \frac{\alpha}{2} \|\nabla f(\theta_t)\|^2
+\]
+
+\subsection{Stochastic Gradient Descent (SGD)}
+\textbf{Update Rule:}
+\[
+\theta_{t+1} = \theta_t - \eta_t \nabla_\theta L(\theta_t; x_i, y_i)
+\]
+
+Assumptions:
+\begin{itemize}
+    \item Convex loss function $J(\theta)$
+    \item Bounded gradients: $\|\nabla J(\theta;x^{(i)},y^{(i)})\| \leq G$
+    \item Learning rate schedule: $\sum \alpha_t = \infty$, $\sum \alpha_t^2 < \infty$
+\end{itemize}
+
+Convergence Result:
+\[
+\lim_{t \to \infty} \mathbb{E}[J(\theta_t)] = J(\theta^*)
+\]
+
+\subsection{SGD with Momentum}
+
+\textbf{Update Rule:}
+\[
+v_{t+1} = \beta v_t + \nabla J(\theta_t; x_t), \quad
+\theta_{t+1} = \theta_t - \alpha v_{t+1}
+\]
+
+Assumptions:
+\begin{itemize}
+    \item Convex and smooth $J(\theta)$
+    \item $\|\nabla J(\theta)\| \leq G$
+    \item Learning rate decay: $\alpha_t = \frac{1}{t}$
+\end{itemize}
+
+\[
+\mathbb{E}[J(\theta_t)] - J(\theta^*) = O\left(\frac{1}{t}\right)
+\]
+
+\subsection{Adam Optimizer}
+
+\textbf{Update Rule:}
+\[
+m_t = \beta_1 m_{t-1} + (1 - \beta_1)g_t
+\]
+\[
+v_t = \beta_2 v_{t-1} + (1 - \beta_2)g_t^2
+\]
+\[
+\hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+\]
+\[
+\theta_{t+1} = \theta_t - \eta \cdot \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+\]
+
+\textbf{AMSGrad Convergence Result:}
+\[
+\min_{t=1,\dots,T} \mathbb{E}[f(\theta_t)] - f(\theta^*) \leq O\left(\frac{\log T}{\sqrt{T}}\right)
+\]
+
+\subsection{RMSProp Optimizer}
+
+\textbf{Update Rule:}
+\[
+v_t = \beta v_{t-1} + (1 - \beta)g_t^2, \quad
+\theta_{t+1} = \theta_t - \frac{\alpha}{\sqrt{v_t} + \epsilon}g_t
+\]
+
+\textbf{Convergence:}
+\[
+\mathbb{E}[f(\bar{\theta}_T)] - f(\theta^*) \leq O\left(\frac{1}{\sqrt{T}}\right)
+\]
+
+\section{Convex Optimization}
+
+\textbf{Convex Set:}
+\[
+\lambda x + (1 - \lambda)y \in C, \quad \forall x, y \in C, \lambda \in [0, 1]
+\]
+
+\textbf{Convex Function:}
+\[
+f(\lambda x + (1 - \lambda)y) \leq \lambda f(x) + (1 - \lambda)f(y)
+\]
+
+\textbf{Properties:}
+\begin{itemize}
+    \item Global minimum is guaranteed
+    \item Strong duality can hold under Slater’s condition
+\end{itemize}
+
+\section{Duality Theory}
+
+\textbf{Lagrangian:}
+\[
+L(\theta, \lambda, \nu) = f(\theta) + \sum_{i=1}^{m} \lambda_i g_i(\theta) + \sum_{j=1}^{p} \nu_j h_j(\theta)
+\]
+
+\textbf{Dual Function:}
+\[
+d(\lambda, \nu) = \inf_\theta L(\theta, \lambda, \nu)
+\]
+
+\textbf{Dual Problem:}
+\[
+\max_{\lambda \geq 0, \nu} d(\lambda, \nu)
+\]
+
+\textbf{Weak Duality:}
+\[
+d(\lambda, \nu) \leq f(\theta^*)
+\]
+
+\textbf{Strong Duality:}
+\[
+\min f(\theta) = \max d(\lambda, \nu)
+\]
+
+\section{References}
+
+\begin{itemize}
+    \item Boyd, S., \& Vandenberghe, L. (2004). \textit{Convex Optimization}. Cambridge University Press.
+    \item Goodfellow, I., Bengio, Y., \& Courville, A. (2016). \textit{Deep Learning}. MIT Press.
+    \item Bottou, L. (2012). \textit{Stochastic Gradient Descent Tricks}. Springer.
+    \item PyTorch Documentation: \url{https://pytorch.org/docs/stable/optim.html}
+    \item Nocedal, J., \& Wright, S. J. (2006). \textit{Numerical Optimization}. Springer.
+\end{itemize}
+
+\end{document}
