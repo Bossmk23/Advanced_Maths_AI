@@ -9,31 +9,6 @@ Optimization in machine learning refers to the process of minimizing a loss func
 
 Stochastic Gradient Descent (SGD) is one of the most widely used optimization techniques in machine learning. It is especially important in training models such as linear regression, logistic regression, and deep neural networks. SGD helps models learn from data by gradually improving predictions through repeated updates to model parameters.
 
-### Advantages of SGD
-
-Here are the key advantages of Stochastic Gradient Descent (SGD):
-
-- **Faster and Memory-Efficient:** Since SGD updates model parameters using small batches instead of the full dataset, it significantly reduces computation time and memory usage, making it ideal for large-scale data.
-
-- **Helps Escape Local Minima:** The randomness in data batches allows SGD to jump out of local minima, helping it find better overall solutions.
-
-- **Simple and Effective:** SGD is easy to implement and supported by most machine learning libraries. Its use of mini-batches and randomness not only reduces computational load but also helps the model avoid getting stuck in poor solutions, improving its ability to generalize on new data.
-
-- **Supports Online Learning:** SGD can update the model as new data arrives, making it suitable for real-time applications.
-
-### Working of SGD (Theory)
-
-Stochastic Gradient Descent works by repeatedly updating the model's parameters in small steps using random mini-batches of the data. This approach makes training faster and allows for continuous updates, which is useful in streaming or online settings.
-
-At each iteration, SGD:
-
-- Picks a random batch of training samples.
-- Calculates the loss and gradient.
-- Updates weights and bias to reduce the loss.
-- Repeats the above steps for several epochs (full passes through the data).
-
-By doing this many times, the model gradually reduces its loss and improves its predictions. The final result is a trained model that has learned from the data and is better at making accurate predictions.
-
 ### Key Terms to Remember
 
 - **Epoch:** One full pass through the entire dataset. It defines how many times the learning algorithm will work through the entire training dataset.
@@ -55,6 +30,31 @@ By doing this many times, the model gradually reduces its loss and improves its 
 - **Binary Cross-Entropy:** A loss function used for binary classification problems.
 
 - **Formula:** L = - (1/m) * Σ [y * log(ŷ) + (1 - y) * log(1 - ŷ)].
+  
+### Working of SGD (Theory)
+
+Stochastic Gradient Descent works by repeatedly updating the model's parameters in small steps using random mini-batches of the data. This approach makes training faster and allows for continuous updates, which is useful in streaming or online settings.
+
+At each iteration, SGD:
+
+- Picks a random batch of training samples.
+- Calculates the loss and gradient.
+- Updates weights and bias to reduce the loss.
+- Repeats the above steps for several epochs (full passes through the data).
+
+By doing this many times, the model gradually reduces its loss and improves its predictions. The final result is a trained model that has learned from the data and is better at making accurate predictions.
+
+### Advantages of SGD
+
+Here are the key advantages of Stochastic Gradient Descent (SGD):
+
+- **Faster and Memory-Efficient:** Since SGD updates model parameters using small batches instead of the full dataset, it significantly reduces computation time and memory usage, making it ideal for large-scale data.
+
+- **Helps Escape Local Minima:** The randomness in data batches allows SGD to jump out of local minima, helping it find better overall solutions.
+
+- **Simple and Effective:** SGD is easy to implement and supported by most machine learning libraries. Its use of mini-batches and randomness not only reduces computational load but also helps the model avoid getting stuck in poor solutions, improving its ability to generalize on new data.
+
+- **Supports Online Learning:** SGD can update the model as new data arrives, making it suitable for real-time applications.
 
 ### Code Demonstration: Implementing SGD
 
@@ -172,6 +172,15 @@ Additionally, a plot showing Loss vs Epoch will appear. The loss decreases over 
 
 RMSprop (Root Mean Square Propagation) is an optimization algorithm commonly used for training machine learning models, particularly deep neural networks. It improves the learning process by dynamically adjusting the learning rate for each parameter based on recent gradient magnitudes. Unlike basic methods like SGD, which use a fixed step size, RMSprop adapts the step size during training, allowing for more efficient and stable convergence. This helps avoid issues such as overshooting the minimum or slowing down unnecessarily. RMSprop is especially effective in handling non-stationary or noisy data and performs well in models like recurrent neural networks (RNNs).
 
+### Working of RMSprop (THEORY)
+
+- **Starts like SGD:** RMSprop also uses gradients to update model parameters and tries to minimize the loss — just like SGD.  
+- **Tracks Past Gradients:** But instead of blindly using the current gradient, RMSprop keeps a moving average of the squared gradients for each parameter.  
+- **Slows Down Big Updates:** If a parameter’s gradient has been large for a while, RMSprop reduces the learning rate for that parameter — so it doesn’t overshoot.  
+- **Speeds Up Small Updates:** If a parameter’s gradient is small, it increases the learning rate slightly — helping it to keep learning and not get stuck.  
+- **Adapts Learning Rate Individually:** Unlike SGD which uses the same learning rate for all parameters, RMSprop adapts the learning rate individually for each one — making training more stable.  
+- **Faster & Smoother Convergence:** This technique leads to faster and more reliable training, especially when dealing with complex models like RNNs or data with noisy gradients.
+
 ### Advantages of RMSprop
 
 Some advantages of using RMSprop optimization technique are:  
@@ -182,16 +191,7 @@ Some advantages of using RMSprop optimization technique are:
 - **Good for RNNs:** RMSprop is particularly effective for training recurrent neural networks, where gradients can vary widely in scale.  
 - **Less Sensitive to Initial Learning Rate:** Since it adapts the step size, RMSprop is often more forgiving when the initial learning rate isn’t perfect.
 
-### Working of RMSprop (THEORY)
-
-- **Starts like SGD:** RMSprop also uses gradients to update model parameters and tries to minimize the loss — just like SGD.  
-- **Tracks Past Gradients:** But instead of blindly using the current gradient, RMSprop keeps a moving average of the squared gradients for each parameter.  
-- **Slows Down Big Updates:** If a parameter’s gradient has been large for a while, RMSprop reduces the learning rate for that parameter — so it doesn’t overshoot.  
-- **Speeds Up Small Updates:** If a parameter’s gradient is small, it increases the learning rate slightly — helping it to keep learning and not get stuck.  
-- **Adapts Learning Rate Individually:** Unlike SGD which uses the same learning rate for all parameters, RMSprop adapts the learning rate individually for each one — making training more stable.  
-- **Faster & Smoother Convergence:** This technique leads to faster and more reliable training, especially when dealing with complex models like RNNs or data with noisy gradients.
-
-### Code: Using RMSprop for Logistic Regression
+### Code Demonstration: Implementing RMSprop for Logistic Regression
 
 This code demonstrates the use of the **RMSprop** optimizer in a simple logistic regression model. It shows how to compile and train the model using **RMSprop** to optimize the learning rate during training.
 
@@ -216,15 +216,6 @@ history = model.fit(X, y, epochs=50, batch_size=16, verbose=1, shuffle=True)
 
 Adam (Adaptive Moment Estimation) is an advanced optimization algorithm commonly used in training machine learning and deep learning models. It combines the benefits of Momentum (which smooths updates) and RMSprop (which adapts learning rates per parameter). Adam tracks both the mean and variance of past gradients to make more adaptive and efficient updates. This leads to faster and more stable convergence during training. It’s widely preferred in machine learning tasks due to its robustness on noisy data and minimal need for tuning.
 
-### Advantages of Adam
-
-- **Adaptive Learning Rates:** Adam automatically adjusts the learning rate for each parameter, which improves training speed and efficiency.  
-- **Combines Momentum & RMSprop:** It blends the benefits of momentum (smooth updates) and RMSprop (adaptive learning rates), making it powerful and balanced.  
-- **Works Well with Sparse Gradients:** Adam performs well on problems with sparse or noisy gradients, such as text or natural language processing tasks.  
-- **Requires Minimal Tuning:** Default hyperparameters often work well, so you don't need to spend much time tuning.  
-- **Fast Convergence:** It generally converges faster than SGD and other optimizers, especially in complex or large-scale models.  
-- **Widely Supported:** Adam is available in all major machine learning libraries like TensorFlow, PyTorch, and Keras.
-
 ### Working of Adam (THEORY)
 
 Adam stands for Adaptive Moment Estimation. It combines the best parts of Momentum and RMSprop to make learning faster and smarter.
@@ -248,7 +239,16 @@ Each parameter is updated by combining `m` and `v` — the update is scaled by `
 - **Repeat the Process:**  
 This cycle is repeated for each batch/epoch until the model converges to the optimal solution.
 
-### Code: Using RMSprop
+### Advantages of Adam
+
+- **Adaptive Learning Rates:** Adam automatically adjusts the learning rate for each parameter, which improves training speed and efficiency.  
+- **Combines Momentum & RMSprop:** It blends the benefits of momentum (smooth updates) and RMSprop (adaptive learning rates), making it powerful and balanced.  
+- **Works Well with Sparse Gradients:** Adam performs well on problems with sparse or noisy gradients, such as text or natural language processing tasks.  
+- **Requires Minimal Tuning:** Default hyperparameters often work well, so you don't need to spend much time tuning.  
+- **Fast Convergence:** It generally converges faster than SGD and other optimizers, especially in complex or large-scale models.  
+- **Widely Supported:** Adam is available in all major machine learning libraries like TensorFlow, PyTorch, and Keras.
+
+### Code Demonstration: Implementing Adam
 
 This code shows how the **Adam optimizer** is applied to a simple linear regression model using PyTorch. It updates weights adaptively for better convergence by combining momentum and RMSprop principles.
 
@@ -328,7 +328,7 @@ It adapts the learning rate for each parameter, handles noisy gradients well, an
 **Why Adam?**  
 Combines momentum and adaptive learning rates, making it the go-to optimizer for most deep learning tasks due to its speed, stability, and minimal tuning requirements.
 
-### Optimizer Comparison: SGD vs RMSprop vs Adam
+## Optimizer Comparison: SGD vs RMSprop vs Adam
 
 | Feature / Optimizer       | **SGD**                                     | **RMSprop**                                        | **Adam**                                                  |
 |--------------------------|---------------------------------------------|---------------------------------------------------|-----------------------------------------------------------|
