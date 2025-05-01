@@ -282,6 +282,52 @@ for epoch in range(epochs):
     adam_losses.append(loss.item())
 ```
 
+## Applications of SGD, RMSProp, and Adam
+
+Modern machine learning and deep learning models rely heavily on optimization algorithms to adjust model parameters and minimize error. Among the most popular optimization techniques are **Stochastic Gradient Descent (SGD)**, **RMSProp**, and **Adam**. Each is suited to different kinds of tasks and datasets. Below are real-world applications where these optimizers are commonly used:
+
+### Applications of Stochastic Gradient Descent (SGD)
+
+1. **Image Classification using CNNs**  
+   SGD is commonly used in training **Convolutional Neural Networks** for image classification tasks like **object detection**, **facial recognition**, and **digit recognition (MNIST)**.
+   
+2. **Online Learning Systems**  
+   Used in recommendation systems (like those on Netflix or Amazon) where models need to update in real time with each new data point.
+
+3. **Large-Scale Machine Learning Models**  
+   Ideal for scenarios where the dataset is too large to fit into memory and mini-batch processing is necessary.
+
+**Why SGD?**  
+Fast updates, low memory usage, and good generalization make SGD suitable for real-time and large-scale applications.
+
+### Applications of RMSProp
+
+1. **Recurrent Neural Networks (RNNs) for NLP**  
+   RMSProp is effective for training RNNs used in **language modeling**, **machine translation**, and **text generation** tasks.
+
+2. **Reinforcement Learning**  
+   Popular in training agents for games and robotics, such as in **Deep Q-Learning** algorithms.
+
+3. **Training Generative Adversarial Networks (GANs)**  
+   RMSProp stabilizes training in GANs by smoothing out gradient updates, which helps prevent mode collapse.
+
+**Why RMSProp?**  
+It adapts the learning rate for each parameter, handles noisy gradients well, and performs robustly on non-stationary tasks.
+
+### Applications of Adam (Adaptive Moment Estimation)
+
+1. **Transformer-Based NLP Models**  
+   Widely used in training models like **BERT**, **GPT**, and **T5** for applications such as **chatbots**, **text summarization**, and **language translation**.
+
+2. **Deep Learning for Computer Vision**  
+   Adam powers complex models like **ResNet**, **EfficientNet**, and **YOLO** used in **autonomous driving**, **medical imaging**, and **surveillance**.
+
+3. **GANs and Autoencoders**  
+   Adam ensures stable and fast convergence when training generative models for tasks like **image synthesis** and **anomaly detection**.
+
+**Why Adam?**  
+Combines momentum and adaptive learning rates, making it the go-to optimizer for most deep learning tasks due to its speed, stability, and minimal tuning requirements.
+
 ### Optimizer Comparison: SGD vs RMSprop vs Adam
 
 | Feature / Optimizer       | **SGD**                                     | **RMSprop**                                        | **Adam**                                                  |
