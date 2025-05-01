@@ -5,7 +5,7 @@
 
 Optimization in machine learning refers to the process of minimizing a loss function to improve model performance. The loss function measures how far off the model's predictions are from the actual values. By minimizing this loss, the model becomes more accurate.
 
-## Introduction of SGD
+# Introduction of SGD
 
 Stochastic Gradient Descent (SGD) is one of the most widely used optimization techniques in machine learning. It is especially important in training models such as linear regression, logistic regression, and deep neural networks. SGD helps models learn from data by gradually improving predictions through repeated updates to model parameters.
 
@@ -328,7 +328,7 @@ It adapts the learning rate for each parameter, handles noisy gradients well, an
 **Why Adam?**  
 Combines momentum and adaptive learning rates, making it the go-to optimizer for most deep learning tasks due to its speed, stability, and minimal tuning requirements.
 
-### Optimizer Comparison: SGD vs RMSprop vs Adam
+## Optimizer Comparison: SGD vs RMSprop vs Adam
 
 | Feature / Optimizer       | **SGD**                                     | **RMSprop**                                        | **Adam**                                                  |
 |--------------------------|---------------------------------------------|---------------------------------------------------|-----------------------------------------------------------|
