@@ -1,13 +1,13 @@
 
 # Cracking the Code of Optimization: A Comprehensive Guide to SGD, RMSprop, and Adam
 
-## Introduction of SGD
-
-Stochastic Gradient Descent (SGD) is one of the most widely used optimization techniques in machine learning. It is especially important in training models such as linear regression, logistic regression, and deep neural networks. SGD helps models learn from data by gradually improving predictions through repeated updates to model parameters.
-
 ## What is Optimization?
 
 Optimization in machine learning refers to the process of minimizing a loss function to improve model performance. The loss function measures how far off the model's predictions are from the actual values. By minimizing this loss, the model becomes more accurate.
+
+## Introduction of SGD
+
+Stochastic Gradient Descent (SGD) is one of the most widely used optimization techniques in machine learning. It is especially important in training models such as linear regression, logistic regression, and deep neural networks. SGD helps models learn from data by gradually improving predictions through repeated updates to model parameters.
 
 ## Advantages of SGD
 
@@ -282,11 +282,11 @@ for epoch in range(epochs):
     adam_losses.append(loss.item())
 ```
 
-## Applications of SGD, RMSProp, and Adam
+# Applications of SGD, RMSProp, and Adam
 
 Modern machine learning and deep learning models rely heavily on optimization algorithms to adjust model parameters and minimize error. Among the most popular optimization techniques are **Stochastic Gradient Descent (SGD)**, **RMSProp**, and **Adam**. Each is suited to different kinds of tasks and datasets. Below are real-world applications where these optimizers are commonly used:
 
-### Applications of Stochastic Gradient Descent (SGD)
+## Applications of Stochastic Gradient Descent (SGD)
 
 1. **Image Classification using CNNs**  
    SGD is commonly used in training **Convolutional Neural Networks** for image classification tasks like **object detection**, **facial recognition**, and **digit recognition (MNIST)**.
@@ -300,7 +300,7 @@ Modern machine learning and deep learning models rely heavily on optimization al
 **Why SGD?**  
 Fast updates, low memory usage, and good generalization make SGD suitable for real-time and large-scale applications.
 
-### Applications of RMSProp
+## Applications of RMSProp
 
 1. **Recurrent Neural Networks (RNNs) for NLP**  
    RMSProp is effective for training RNNs used in **language modeling**, **machine translation**, and **text generation** tasks.
@@ -314,7 +314,7 @@ Fast updates, low memory usage, and good generalization make SGD suitable for re
 **Why RMSProp?**  
 It adapts the learning rate for each parameter, handles noisy gradients well, and performs robustly on non-stationary tasks.
 
-### Applications of Adam (Adaptive Moment Estimation)
+## Applications of Adam (Adaptive Moment Estimation)
 
 1. **Transformer-Based NLP Models**  
    Widely used in training models like **BERT**, **GPT**, and **T5** for applications such as **chatbots**, **text summarization**, and **language translation**.
