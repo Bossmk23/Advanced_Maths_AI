@@ -1,7 +1,7 @@
 
 # Cracking the Code of Optimization: A Comprehensive Guide to SGD, RMSprop, and Adam
 
-# Introduction of SGD
+## Introduction of SGD
 
 Stochastic Gradient Descent (SGD) is one of the most widely used optimization techniques in machine learning. It is especially important in training models such as linear regression, logistic regression, and deep neural networks. SGD helps models learn from data by gradually improving predictions through repeated updates to model parameters.
 
