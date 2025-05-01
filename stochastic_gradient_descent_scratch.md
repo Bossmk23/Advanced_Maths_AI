@@ -166,8 +166,139 @@ Epoch 50/50, Loss: 0.5923
 
 Additionally, a plot showing Loss vs Epoch will appear. The loss decreases over time, indicating that the SGD optimizer is working to reduce the binary cross-entropy and improve model accuracy.
 
-## Summary
+# Introduction of RMSprop
 
-Stochastic Gradient Descent (SGD) is a powerful optimization technique used in machine learning, especially for training large models efficiently. By updating model parameters using small batches of data, SGD minimizes computational cost and memory usage. It also introduces randomness, which helps escape local minima, improving the model's ability to generalize.
+RMSprop (Root Mean Square Propagation) is an optimization algorithm commonly used for training machine learning models, particularly deep neural networks. It improves the learning process by dynamically adjusting the learning rate for each parameter based on recent gradient magnitudes. Unlike basic methods like SGD, which use a fixed step size, RMSprop adapts the step size during training, allowing for more efficient and stable convergence. This helps avoid issues such as overshooting the minimum or slowing down unnecessarily. RMSprop is especially effective in handling non-stationary or noisy data and performs well in models like recurrent neural networks (RNNs).
 
-Through this tutorial, you’ve learned how SGD works by building an SGD optimizer from scratch and testing it on a simple binary classification problem. By applying these concepts, you can optimize machine learning models more effectively and tackle real-world problems in AI and data science. Mastering SGD opens up many opportunities in AI-driven industries.
+## Advantages of RMSprop
+
+Some advantages of using RMSprop optimization technique are:  
+
+- **Adaptive Learning Rates:** It automatically adjusts the learning rate for each parameter, making training more efficient and reducing the need for manual tuning.  
+- **Works Well with Noisy Data:** RMSprop performs better than SGD on noisy problems, such as online learning or mini-batch updates.  
+- **Stable and Faster Convergence:** It helps models converge more quickly and smoothly by avoiding the zig-zagging often seen in standard SGD.  
+- **Good for RNNs:** RMSprop is particularly effective for training recurrent neural networks, where gradients can vary widely in scale.  
+- **Less Sensitive to Initial Learning Rate:** Since it adapts the step size, RMSprop is often more forgiving when the initial learning rate isn’t perfect.
+
+## Working of RMSprop (THEORY)
+
+- **Starts like SGD:** RMSprop also uses gradients to update model parameters and tries to minimize the loss — just like SGD.  
+- **Tracks Past Gradients:** But instead of blindly using the current gradient, RMSprop keeps a moving average of the squared gradients for each parameter.  
+- **Slows Down Big Updates:** If a parameter’s gradient has been large for a while, RMSprop reduces the learning rate for that parameter — so it doesn’t overshoot.  
+- **Speeds Up Small Updates:** If a parameter’s gradient is small, it increases the learning rate slightly — helping it to keep learning and not get stuck.  
+- **Adapts Learning Rate Individually:** Unlike SGD which uses the same learning rate for all parameters, RMSprop adapts the learning rate individually for each one — making training more stable.  
+- **Faster & Smoother Convergence:** This technique leads to faster and more reliable training, especially when dealing with complex models like RNNs or data with noisy gradients.
+
+## Code: Using RMSprop for Logistic Regression
+
+This code demonstrates the use of the **RMSprop** optimizer in a simple logistic regression model. It shows how to compile and train the model using **RMSprop** to optimize the learning rate during training.
+
+```python
+# ---------- Step 2: Create a Logistic Regression Model ----------
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(1, input_shape=(2,), activation='sigmoid')  # Logistic regression
+])
+
+# ---------- Step 3: Compile the Model with RMSprop ----------
+model.compile(
+    optimizer=tf.keras.optimizers.RMSprop(learning_rate=0.01),  # Using RMSprop optimizer
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+# ---------- Step 4: Train the Model ----------
+history = model.fit(X, y, epochs=50, batch_size=16, verbose=1, shuffle=True)
+```
+
+# Introduction of Adam
+
+Adam (Adaptive Moment Estimation) is an advanced optimization algorithm commonly used in training machine learning and deep learning models. It combines the benefits of Momentum (which smooths updates) and RMSprop (which adapts learning rates per parameter). Adam tracks both the mean and variance of past gradients to make more adaptive and efficient updates. This leads to faster and more stable convergence during training. It’s widely preferred in machine learning tasks due to its robustness on noisy data and minimal need for tuning.
+
+## Advantages of Adam
+
+- **Adaptive Learning Rates:** Adam automatically adjusts the learning rate for each parameter, which improves training speed and efficiency.  
+- **Combines Momentum & RMSprop:** It blends the benefits of momentum (smooth updates) and RMSprop (adaptive learning rates), making it powerful and balanced.  
+- **Works Well with Sparse Gradients:** Adam performs well on problems with sparse or noisy gradients, such as text or natural language processing tasks.  
+- **Requires Minimal Tuning:** Default hyperparameters often work well, so you don't need to spend much time tuning.  
+- **Fast Convergence:** It generally converges faster than SGD and other optimizers, especially in complex or large-scale models.  
+- **Widely Supported:** Adam is available in all major machine learning libraries like TensorFlow, PyTorch, and Keras.
+
+## Working of Adam (THEORY)
+
+Adam stands for Adaptive Moment Estimation. It combines the best parts of Momentum and RMSprop to make learning faster and smarter.
+
+- **How do we start:**  
+We start with initialization of two moving averages for each parameter:  
+1. `m` for the mean of gradients (momentum).  
+2. `v` for the squared gradients (like in RMSprop).  
+These are both set to zero at the start.
+
+- **Gradient Calculation:**  
+For each parameter, Adam computes the gradient of the loss function during training (just like SGD).
+
+- **Update Moving Averages:**  
+1. `m` is updated using the current gradient to track the direction of the gradient.  
+2. `v` is updated using the square of the gradient to track its magnitude.
+
+- **Bias Correction:**  
+Each parameter is updated by combining `m` and `v` — the update is scaled by `m / (√v + ε)`, which gives an adaptive learning rate for each parameter.
+
+- **Repeat the Process:**  
+This cycle is repeated for each batch/epoch until the model converges to the optimal solution.
+
+## Code: Using RMSprop
+
+This code shows how the **Adam optimizer** is applied to a simple linear regression model using PyTorch. It updates weights adaptively for better convergence by combining momentum and RMSprop principles.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Convert data to torch tensors
+X_train_torch = torch.tensor(X_train, dtype=torch.float32)
+y_train_torch = torch.tensor(y_train, dtype=torch.float32).unsqueeze(1)
+
+# Define simple linear model
+model = nn.Linear(X_train.shape[1], 1)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+
+# Train model
+adam_losses = []
+epochs = 200
+
+for epoch in range(epochs):
+    model.train()
+    
+    optimizer.zero_grad()
+    outputs = model(X_train_torch)
+    loss = criterion(outputs, y_train_torch)
+    loss.backward()
+    optimizer.step()
+    
+    adam_losses.append(loss.item())
+```
+
+### Optimizer Comparison: SGD vs RMSprop vs Adam
+
+| Feature / Optimizer       | **SGD**                                     | **RMSprop**                                        | **Adam**                                                  |
+|--------------------------|---------------------------------------------|---------------------------------------------------|-----------------------------------------------------------|
+| **Learning Rate**         | Fixed; needs tuning                        | Adaptive to recent gradients                      | Adaptive using both gradient mean & variance              |
+| **Gradient Use**          | Uses current gradient only                 | Uses moving average of squared gradients          | Uses moving average of both gradients & squared gradients |
+| **Stability & Speed**     | Can be unstable and slow                   | More stable, faster than SGD                      | Highly stable, fast convergence                           |
+| **Best Use Cases**        | Simple models, basic tasks                 | Noisy data, RNNs                                  | Large models, NLP, CV, deep learning                      |
+| **Applications**          | Image classification, shallow nets         | Online learning, sequential data                  | NLP, computer vision, large datasets                      |
+| **Tuning Needs**          | High                                        | Moderate                                          | Low (works well with defaults)                            |
+| **Library Support**       | Available in TensorFlow & PyTorch          | Available in TensorFlow & PyTorch                 | Widely supported across all ML libraries                  |
+| **Beginner Friendly**     | Best for learning basics                   | Intermediate                                      | Yes; commonly used as default                            |
+
+## Conclusion
+
+Nowadays, when machine learning is trending, we need to update ourselves by learning optimization techniques like **SGD**, **RMSprop**, and **Adam** to enhance model training efficiency.  
+**SGD (Stochastic Gradient Descent)** is the most basic optimizer, ideal for understanding foundational learning but often slow and unstable.  
+**RMSprop** improves upon SGD by adapting learning rates for each parameter using recent gradient information, making it effective for noisy data and RNNs.  
+**Adam** combines the strengths of Momentum and RMSprop, offering fast and stable convergence, especially useful in deep learning, NLP, and computer vision.  
+These optimizers play a key role in how models learn — by controlling learning rates, using gradient history, and ensuring convergence stability.  
+The right choice depends on the task, data type, and complexity of the model being built.  **In a fast-moving field like machine learning, continuous learning and timely adaptation aren't optional — they're essential for staying ahead and building smarter solutions.**
+
